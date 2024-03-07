@@ -8,7 +8,7 @@ interface Calculation {
 
 
 @Component({
-    selector: "app-root",
+    selector: "app-calculator",
     templateUrl: "./calculator.component.html",
     styleUrls: ["./calculator.component.scss"],
     standalone: true,
@@ -65,7 +65,7 @@ export class CalculatorComponent {
             this.currentValue = this.currentValue.slice(0, -1);
         }
     }
-    
+
     reset(): void {
         this.currentValue = '';
     }
