@@ -1,0 +1,102 @@
+<div class="calculator">
+    <input type="text" [(ngModel)]="currentValue" class="field" disabled>
+
+    <div class="buttons">
+        <table>
+            <tr>
+                <td colspan="2">
+                    <button class="op-btn" (click)="reset()">AC</button>
+                </td>
+                <td colspan="2">
+                    <button class="op-btn" (click)="backspace()">←</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button (click)="appendNumber(7)">7</button>
+                </td>
+                <td>
+                    <button (click)="appendNumber(8)">8</button>
+                </td>
+                <td>
+                    <button (click)="appendNumber(9)">9</button>
+                </td>
+                <td>
+                    <button class="op-btn" (click)="appendOperation('-')">-</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button (click)="appendNumber(4)">4</button>
+                </td>
+                <td>
+                    <button (click)="appendNumber(5)">5</button>
+                </td>
+                <td>
+                    <button (click)="appendNumber(6)">6</button>
+                </td>
+                <td>
+                    <button class="op-btn" (click)="appendOperation('/')">/</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button (click)="appendNumber(1)">1</button>
+                </td>
+                <td>
+                    <button (click)="appendNumber(2)">2</button>
+                </td>
+                <td>
+                    <button (click)="appendNumber(3)">3</button>
+                </td>
+                <td>
+                    <button class="op-btn" (click)="appendOperation('*')">x</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button (click)="appendNumber(0)">0</button>
+                </td>
+                <td>
+                    <button (click)="appendPoint()">.</button>
+                </td>
+                <td>
+                    <button (click)="calculate()">=</button>
+                </td>
+                <td>
+                    <button class="op-btn" (click)="appendOperation('+')">+</button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button class="op-btn" (click)="reset()">AC</button>
+                </td>
+                <td colspan="2" style="width: 50%;">
+                    <button class="cash-out" (click)="saveRecord()">Cash Out</button>
+                </td>
+            </tr>
+        </table>
+
+        <!-- <button (click)="appendNumber(2)">2</button>
+        <button (click)="appendNumber(3)">3</button>
+        <button (click)="appendOperation('+')">+</button>
+
+        <button (click)="appendNumber(4)">4</button>
+        <button (click)="appendNumber(5)">5</button>
+        <button (click)="appendNumber(6)">6</button>
+        <button (click)="appendOperation('-')">-</button>
+
+        <button (click)="appendNumber(7)">7</button>
+        <button (click)="appendNumber(8)">8</button>
+        <button (click)="appendNumber(9)">9</button>
+        <button (click)="appendOperation('*')">*</button>
+
+        <button (click)="appendNumber(0)">0</button>
+        <button (click)="appendPoint()">.</button>
+        <button (click)="calculate()">=</button>
+        <button (click)="appendOperation('/')">/</button>
+        <button (click)="backspace()">Back</button> -->
+    </div>
+
+    <!-- <button (click)="saveRecord()">Cash Out</button> -->
+</div>
