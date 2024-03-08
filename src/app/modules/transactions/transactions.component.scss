@@ -1,0 +1,11 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #CBE1FF;
+  text-align: left;
+  tr{
+    td, th{
+      padding: .5em 1em ;
+    }
+  }
+}

@@ -1,0 +1,25 @@
+<h3>Total: {{total()}}</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Cash In</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (transaction of transactions | async; track transaction.id) {
+        <tr>
+            <td>
+                {{ formatDate(transaction.datetime) }}
+            </td>
+            <td>
+                {{ transaction.value }} Rs.
+            </td>
+            <td>
+                <button (click)="networkService.deleteTransaction(transaction.id)">Delete</button>
+            </td>
+        </tr>
+        }
+
+    </tbody>
+</table>

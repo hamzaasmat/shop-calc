@@ -1,5 +1,6 @@
-import { Component } from "@angular/core";
-import { COMMON_MODULES } from "../core/constants/constants";
+import { Component, inject } from "@angular/core";
+import { COMMON_MODULES } from "../../core/constants/constants";
+import { NetworkService } from "../../core/services/network.service";
 
 interface Calculation {
     expression: string;
@@ -17,7 +18,8 @@ interface Calculation {
 
 export class CalculatorComponent {
     title = "shop-calc";
-    constructor() { }
+
+    networkService = inject(NetworkService);
 
     currentValue: string = '';
     history: Calculation[] = [];
@@ -54,8 +56,10 @@ export class CalculatorComponent {
         if (this.currentValue !== '') {
             const result = eval(this.currentValue);
             const dateTime = new Date().toISOString();
-            localStorage.setItem(dateTime, result.toString());
-            this.history.push({ expression: this.currentValue, result });
+            this.networkService.recordTransaction({
+                datetime: dateTime,
+                value: result
+            })
             this.reset();
         }
     }
