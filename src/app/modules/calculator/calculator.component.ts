@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { COMMON_MODULES } from "../../core/constants/constants";
 import { NetworkService } from "../../core/services/network.service";
 import moment from "moment";
@@ -18,16 +18,51 @@ interface Calculation {
     imports: [...COMMON_MODULES]
 })
 
-export class CalculatorComponent {
+export class CalculatorComponent implements OnInit {
     title = "shop-calc";
 
     networkService = inject(NetworkService);
 
     currentValue: string = '';
     history: Calculation[] = [];
+    lastEnterPressTime: number = 0;
+
+    ngOnInit(): void {
+        window.addEventListener('keydown', this.onKeyPress.bind(this));
+    }
+    onInputChange(event: Event) {
+        const inputField = event.target as HTMLInputElement;
+        inputField.scrollLeft = inputField.scrollWidth;
+    }
 
     appendNumber(num: number): void {
         this.currentValue += num.toString();
+    }
+
+    handleEnterKeyPress(): void {
+        const currentTime = Date.now();
+        if (currentTime - this.lastEnterPressTime < 500) { // Check if Enter is pressed twice quickly
+            this.saveRecord();
+        } else {
+            this.calculate();
+        }
+        this.lastEnterPressTime = currentTime;
+    }
+
+    onKeyPress(event: KeyboardEvent): void {
+        const key: any = event.key;
+        const isNumber = !isNaN(Number(key));
+        const isOperator = ['+', '-', '*', '/', '.'].includes(key);
+        if (isNumber || isOperator) {
+            this.appendNumber(key);
+            event.preventDefault();
+        } else if (key === 'Enter') {
+            this.handleEnterKeyPress();
+            event.preventDefault();
+        } else if (key === 'Backspace') {
+            this.backspace();
+            event.preventDefault();
+        }
     }
 
     appendPoint(): void {
