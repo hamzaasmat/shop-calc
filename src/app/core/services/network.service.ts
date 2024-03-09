@@ -1,8 +1,12 @@
 import { Injectable, inject } from "@angular/core";
-import { Firestore, addDoc, collection, collectionData, deleteDoc, doc } from "@angular/fire/firestore";
+import { Firestore, addDoc, collection, collectionData, deleteDoc, doc, where } from "@angular/fire/firestore";
 import { Observable } from "rxjs";
-import { Transaction } from "../interface/transaction.interface";
+import { query, orderBy, limit } from "firebase/firestore";
 
+interface Config {
+    orderBy?: any;
+    limit?: any;
+}
 @Injectable({
     providedIn: 'root',
 })
@@ -11,19 +15,34 @@ export class NetworkService {
 
     firestore = inject(Firestore);
 
-    contactsCollection = collection(
-        this.firestore,
-        'transactions'
-    );
+    getDocuments(collectionName: string, config: any = null): Observable<any> {
 
-    transactions: Observable<any> = collectionData(this.contactsCollection, { idField: 'id' });
+        const documents = collection(
+            this.firestore,
+            collectionName
+        );
+        const queryArgs: any = [];
+        if (config) {
+            for (const key of Object.keys(config)) {
+                if (config[key]) {
+                    queryArgs.push(config[key]);
+                }
+            }
+        }
+        const requestQuery: any = query(documents, ...queryArgs);
+        return collectionData(requestQuery, { idField: 'id' });
+    }
 
-    async recordTransaction(newTransaction: Partial<Transaction>) {
-        await addDoc(this.contactsCollection, { ...newTransaction });
+    async addDocument(newDocument: any, collectionName: string) {
+        const documents = collection(
+            this.firestore,
+            collectionName
+        );
+        await addDoc(documents, { ...newDocument });
     };
 
-    async deleteTransaction(id: string) {
-        const docRef = doc(this.firestore, 'transactions', id);
+    async deleteDocument(id: string, collectionName: string) {
+        const docRef = doc(this.firestore, collectionName, id);
         await deleteDoc(docRef);
     }
 }

@@ -2,16 +2,34 @@
     <div class="vendor-title">
         Record Purchase
     </div>
-    <form>
+    <form [formGroup]="formGroup" (submit)="onSubmit()">
         <div>
             <label for="vendorName">Vendor Name</label>
-            <input type="text" id="vendorName">
+            <input type="text" formControlName="vendor" id="vendorName">
         </div>
         <div style="margin-top: 1em;">
             <label for="purchaseCost">Purchase Cost</label>
-            <input type="text" id="purchaseCost">
+            <input type="number" formControlName="purchaseCost" id="purchaseCost">
         </div>
-        <button class="btn">Record</button>
+        <button class="btn" type="submit">Record</button>
 
     </form>
 </div>
+
+<table class="table">
+    <tbody>
+        @for (ven of vendors | async; track ven.id) {
+        <tr>
+            <td>
+                {{ven.vendor}}
+            </td>
+            <td>
+                {{ven.purchaseCost}}
+            </td>
+            <td>
+                <button (click)="networkService.deleteDocument(ven.id, 'vendors')">Delete</button>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

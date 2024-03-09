@@ -3,13 +3,7 @@ import { COMMON_MODULES } from "../../core/constants/constants";
 import { NetworkService } from "../../core/services/network.service";
 import moment from "moment";
 import { BehaviorSubject } from "rxjs";
-
-interface Calculation {
-    expression: string;
-    result: number;
-}
-
-
+import { orderBy, limit, where } from "firebase/firestore";
 @Component({
     selector: "app-transactions",
     templateUrl: "./transactions.component.html",
@@ -27,15 +21,28 @@ export class TransactionsComponent {
     public total = signal(0);
 
     constructor() {
-        this.networkService.transactions.subscribe((transactions: any) => {
+        let date: any = new Date();
+        date = moment(date).format('YYYY-MM-DD')
+        this.fetchTransactions(date);
+    }
+
+    public fetchTransactions(filter: any = null) {
+        let config: any = { orderBy: orderBy('time', 'desc') };
+        if (filter) {
+            config.filter = where('date', '==', filter);
+        }
+        this.networkService.getDocuments('transactions', config).subscribe((transactions: any) => {
             this.transactions.next(transactions);
-            console.log(transactions);
             this.total.set(transactions.reduce((total: any, transaction: any) => total + transaction.value, 0));
         })
     }
 
-    public formatDate(date: Date): string {
-        return moment(date).format('DD-MM-YYYY hh:mm:ss a');
+    public formatDatetime(date: Date): string {
+        return moment(date).format('hh:mm:ss a');
+    }
+
+    public getDate(e: any) {
+        this.fetchTransactions(e?.target?.value)
     }
 
 }

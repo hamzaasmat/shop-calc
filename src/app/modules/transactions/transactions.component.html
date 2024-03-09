@@ -1,25 +1,32 @@
-<h3>Total: {{total()}}</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Cash In</th>
-        </tr>
-    </thead>
-    <tbody>
-        @for (transaction of transactions | async; track transaction.id) {
-        <tr>
-            <td>
-                {{ formatDate(transaction.datetime) }}
-            </td>
-            <td>
-                {{ transaction.value }} Rs.
-            </td>
-            <td>
-                <button (click)="networkService.deleteTransaction(transaction.id)">Delete</button>
-            </td>
-        </tr>
-        }
+<div class="page-margin">
+    <h3>Total: {{total()}}</h3>
+    <input type="date" class="input-control" (change)="getDate($event)">
+    <table class="table">
+        <thead>
+            <tr>
+                <th colspan="2">Name</th>
+                <th>Cash In</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (transaction of transactions | async; track transaction.id) {
+            <tr>
+                <td>
+                    {{ transaction.date }}
+                </td>
+                <td>
+                    {{ formatDatetime(transaction.time) }}
+                </td>
+                <td>
+                    {{ transaction.value }} Rs.
+                </td>
+                <td>
+                    <button (click)="networkService.deleteDocument(transaction.id, 'transactions')">Delete</button>
+                </td>
+            </tr>
+            }
 
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>

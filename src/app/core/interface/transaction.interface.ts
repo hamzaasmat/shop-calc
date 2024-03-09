@@ -1,5 +1,6 @@
-export interface Transaction {
+export interface ITransaction {
     id: string;
-    datetime: string;
+    date: string;
+    time: string;
     value: number;
 }

@@ -1,0 +1,26 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #cbe1ff;
+  text-align: left;
+  tr {
+    td,
+    th {
+      padding: 0.5em 1em;
+    }
+  }
+}
+
+.input-control {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5em 1em;
+  outline: none;
+  border: none;
+  background-color: #cbe1ff;
+  border-radius: 10px;
+}
+
+.page-margin {
+  margin: 0 1em;
+}

@@ -1,6 +1,8 @@
 import { Component, inject } from "@angular/core";
 import { COMMON_MODULES } from "../../core/constants/constants";
 import { NetworkService } from "../../core/services/network.service";
+import moment from "moment";
+import { ITransaction } from "../../core/interface/transaction.interface";
 
 interface Calculation {
     expression: string;
@@ -55,11 +57,15 @@ export class CalculatorComponent {
     saveRecord(): void {
         if (this.currentValue !== '') {
             const result = eval(this.currentValue);
-            const dateTime = new Date().toISOString();
-            this.networkService.recordTransaction({
-                datetime: dateTime,
+            const date: any = new Date();
+            const time = date.toISOString();
+
+            const PAYLOAD: Partial<ITransaction> = {
+                date: moment(date).format('YYYY-MM-DD'),
+                time: time,
                 value: result
-            })
+            }
+            this.networkService.addDocument(PAYLOAD, 'transactions');
             this.reset();
         }
     }
