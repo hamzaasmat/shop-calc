@@ -57,7 +57,8 @@ export class CalculatorComponent implements OnInit {
             this.appendNumber(key);
             event.preventDefault();
         } else if (key === 'Enter') {
-            this.handleEnterKeyPress();
+            // this.handleEnterKeyPress();
+            this.calculate();
             event.preventDefault();
         } else if (key === 'Backspace') {
             this.backspace();
